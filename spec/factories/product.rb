@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+# spec/factories/products.rb
+require 'faker'
+
+FactoryBot.define do
+  factory :product do
+    name { Faker::Commerce.product_name }
+    price { Faker::Commerce.price(range: 0..100.0, as_string: false) }
+
+    description { Faker::Lorem.paragraph }
+    gtin { Faker::Barcode.ean }
+  end
+end
