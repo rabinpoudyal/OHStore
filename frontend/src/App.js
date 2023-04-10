@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import "./App.css";
 import Login from "./features/login/Login";
 import Spinner from "./Spinner";
+import Products from "./features/products/Product";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,15 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path: "/products",
+    element: <Products />
+  }
 ]);
 
 function App({ isLoading }) {
   return (
-    <div className="App">
+    <div className="App container mt-5">
       <Spinner isLoading={isLoading} />
       <RouterProvider router={router}></RouterProvider>
     </div>

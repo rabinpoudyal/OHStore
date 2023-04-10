@@ -46,6 +46,9 @@ gem 'bootsnap', require: false
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
+gem 'jsonapi-serializer'
+gem 'rack-cors'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
