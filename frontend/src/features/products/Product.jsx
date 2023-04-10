@@ -9,18 +9,25 @@ import {
   CardText,
   Row,
   Col,
+  CardFooter,
+  Button,
 } from "reactstrap";
-import { getProductsAsync, selectProducts } from "./productsSlice";
+import { getProductsAsync, destroyProductAsync, selectProducts, removeProductById } from "./productsSlice";
 
 const Products = () => {
 
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
-  console.log(products)
 
   useEffect(() => {
     dispatch(getProductsAsync());
   }, [dispatch]);
+
+  const destroyProduct = (id) => {
+    const result = dispatch(destroyProductAsync(id))
+    result.then(() => dispatch(removeProductById(id)))
+  }
+
 
   return (
     <div>
@@ -40,10 +47,13 @@ const Products = () => {
                   <CardTitle>{product.name}</CardTitle>
                   <CardSubtitle>{product.price}</CardSubtitle>
                   <CardText>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    non risus.
+                    {product.description}
                   </CardText>
                 </CardBody>
+                <CardFooter>
+                  <Button color="primary">Add to cart</Button>
+                  <Button color="danger" onClick={() => destroyProduct(product.id)}>Delete</Button>
+                </CardFooter>
               </Card>
             </Col>
           );

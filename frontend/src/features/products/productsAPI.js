@@ -5,3 +5,7 @@ import { GET_PRODUCTS } from "../../endpoints";
 export function getProducts() {
   return axios.get(GET_PRODUCTS);
 }
+
+export function destroyProduct(id) {
+  return axios.delete(`${GET_PRODUCTS}/${id}`);
+}
