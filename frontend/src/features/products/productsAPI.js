@@ -6,6 +6,10 @@ export function getProducts() {
   return axios.get(GET_PRODUCTS);
 }
 
+export function addProduct(product) {
+  return axios.post(GET_PRODUCTS, product);
+}
+
 export function destroyProduct(id) {
   return axios.delete(`${GET_PRODUCTS}/${id}`);
 }

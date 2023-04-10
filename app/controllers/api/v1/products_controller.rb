@@ -33,7 +33,7 @@ module Api
       end
 
       def product_params
-        params.require(:product).permit(:name, :price, :gtin, :availability)
+        params.require(:product).permit(:name, :price, :gtin, :availability, :description)
       end
     end
   end

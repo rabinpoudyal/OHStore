@@ -4,6 +4,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     resource '*',
              headers: :any,
-             methods: [:get, :delete]
+             methods: %i[get delete post put]
   end
 end
