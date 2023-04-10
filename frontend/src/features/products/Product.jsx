@@ -17,7 +17,9 @@ import {
   getProductsAsync,
   destroyProductAsync,
   addProductAsync,
+  editProductAsync,
   selectProducts,
+  setSelectedProduct,
 } from "./productsSlice";
 
 const Products = () => {
@@ -42,6 +44,32 @@ const Products = () => {
     dispatch(addProductAsync(payload))
   };
 
+  const editExistingProduct = (product) => {
+    const { id, type, ...prodctToEdit } = product;
+    const payload = {
+      product: prodctToEdit
+    }
+    dispatch(editProductAsync({ payload, id }))
+    toggle();
+  };
+
+  const editProduct = (product) => {
+    dispatch(setSelectedProduct(product));
+    toggle();
+  };
+
+  const addNewProduct = () => {
+    const product = {
+      name: "",
+      price: "",
+      availability: true,
+      description: "",
+      gtin: "",
+    };
+    dispatch(setSelectedProduct(product));
+    toggle();
+  };
+
   return (
     <div>
       <Row>
@@ -49,7 +77,7 @@ const Products = () => {
           <h1>Products</h1>
         </Col>
         <Col sm="4">
-          <Button color="primary" onClick={toggle}>
+          <Button color="primary" onClick={addNewProduct}>
             Add new product
           </Button>
         </Col>
@@ -78,7 +106,7 @@ const Products = () => {
                   >
                     Delete
                   </Button>
-                  <Button color="warning" onClick={toggle}>Edit</Button>
+                  <Button color="warning" onClick={() => editProduct(product)}>Edit</Button>
                 </CardFooter>
               </Card>
             </Col>
@@ -90,6 +118,7 @@ const Products = () => {
         isOpen={addProductModalIsOpen}
         toggle={toggle}
         addProduct={createNewProduct}
+        editProduct={editExistingProduct}
       />
     </div>
   );

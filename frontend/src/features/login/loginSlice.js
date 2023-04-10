@@ -15,8 +15,6 @@ export const loginAsync = createAsyncThunk(
   'login/login',
   async (email, password) => {
     const response = await serverLogin(email, password);
-    console.log(response)
-    // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );

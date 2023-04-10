@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Button,
   Modal,
@@ -10,39 +11,28 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-// import { addProduct } from '../actions/productActions';
+import { selectSelectedProduct, setSelectedProduct } from './productsSlice';
 
-const AddProductModal = ({ isOpen, toggle, addProduct }) => {
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [availability, setAvailability] = useState(true);
-    const [description, setDescription] = useState('');
-    const [gtin, setGtin] = useState('');
+const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
+    const selectedProduct = useSelector(selectSelectedProduct);
+    const dispatch = useDispatch();
   
+    const handleChange = (event) => {
+      const { name, value, checked, type } = event.target;
+      const val = type === 'checkbox' ? checked : value;
+      
+      dispatch(setSelectedProduct({
+        ...selectedProduct,
+        [name]: val,
+      }));
+    };
+
     const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      // Create a new product object from the form data
-      const newProduct = {
-        name,
-        price: parseFloat(price),
-        availability,
-        description,
-        gtin,
-      };
-  
-      // Call the addProduct action to add the new product to the store
-      addProduct(newProduct);
-  
-      // Reset the form state
-      setName('');
-      setPrice('');
-      setAvailability(true);
-      setDescription('');
-      setGtin('');
-  
-      // Close the modal
-      toggle();
+      if (selectedProduct.id) {
+        editProduct(selectedProduct);
+      } else {
+        addProduct(selectedProduct);
+      }
     };
   
     return (
@@ -56,8 +46,8 @@ const AddProductModal = ({ isOpen, toggle, addProduct }) => {
                 type="text"
                 name="name"
                 id="name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                value={selectedProduct.name}
+                onChange={handleChange}
                 required
               />
             </FormGroup>
@@ -67,8 +57,8 @@ const AddProductModal = ({ isOpen, toggle, addProduct }) => {
                 type="number"
                 name="price"
                 id="price"
-                value={price}
-                onChange={(event) => setPrice(event.target.value)}
+                value={selectedProduct.price}
+                onChange={handleChange}
                 required
               />
             </FormGroup>
@@ -76,8 +66,8 @@ const AddProductModal = ({ isOpen, toggle, addProduct }) => {
               <Label check>
                 <Input
                   type="checkbox"
-                  checked={availability}
-                  onChange={(event) => setAvailability(event.target.checked)}
+                  checked={selectedProduct.availability}
+                  onChange={handleChange}
                 />
                 {' '}
                 Available
@@ -89,8 +79,8 @@ const AddProductModal = ({ isOpen, toggle, addProduct }) => {
                 type="textarea"
                 name="description"
                 id="description"
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
+                value={selectedProduct.description}
+                onChange={handleChange}
               />
             </FormGroup>
             <FormGroup>
@@ -99,8 +89,8 @@ const AddProductModal = ({ isOpen, toggle, addProduct }) => {
                 type="text"
                 name="gtin"
                 id="gtin"
-                value={gtin}
-                onChange={(event) => setGtin(event.target.value)}
+                value={selectedProduct.gtin}
+                onChange={handleChange}
                 required
               />
             </FormGroup>
@@ -115,4 +105,3 @@ const AddProductModal = ({ isOpen, toggle, addProduct }) => {
   };
 
 export default AddProductModal;
-  

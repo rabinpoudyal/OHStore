@@ -1,12 +1,17 @@
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { addProduct, destroyProduct, getProducts } from "./productsAPI";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  addProduct,
+  destroyProduct,
+  editProduct,
+  getProducts,
+} from "./productsAPI";
 import Jsona from "jsona";
 const dataFormatter = new Jsona();
 
 const initialState = {
   products: [],
   filters: {},
-  selectedProductId: null,
+  selectedProduct: {},
 };
 
 export const getProductsAsync = createAsyncThunk(
@@ -25,10 +30,18 @@ export const addProductAsync = createAsyncThunk(
   }
 );
 
+export const editProductAsync = createAsyncThunk(
+  "edit/products",
+  async ({ payload, id }) => {
+    const response = await editProduct(payload, id);
+    return response.data;
+  }
+);
+
 export const destroyProductAsync = createAsyncThunk(
   "destroy/products",
   async (selectedProductId) => {
-    const response = destroyProduct(selectedProductId)
+    const response = destroyProduct(selectedProductId);
     return response.data;
   }
 );
@@ -38,12 +51,12 @@ export const productsSlice = createSlice({
   initialState,
   reducers: {
     setSelectedProduct: (state, action) => {
-      state.selectedProductId = action.payload;
+      state.selectedProduct = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getProductsAsync.pending , (state) => {
+      .addCase(getProductsAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(getProductsAsync.fulfilled, (state, action) => {
@@ -59,7 +72,9 @@ export const productsSlice = createSlice({
       .addCase(destroyProductAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const deletedProductId = action.meta.arg;
-        state.products = [ ...state.products ].filter(product => product.id !== deletedProductId);
+        state.products = [...state.products].filter(
+          (product) => product.id !== deletedProductId
+        );
       })
       .addCase(destroyProductAsync.rejected, (state) => {
         state.status = "failed";
@@ -69,9 +84,28 @@ export const productsSlice = createSlice({
       })
       .addCase(addProductAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.products = [...state.products, dataFormatter.deserialize(action.payload)];
+        state.products = [
+          ...state.products,
+          dataFormatter.deserialize(action.payload),
+        ];
       })
       .addCase(addProductAsync.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(editProductAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(editProductAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const newProductList = [...state.products].filter(item => {
+          return item.id !== action.payload.data.id
+        })
+        state.products = [
+          ...newProductList,
+          dataFormatter.deserialize(action.payload),
+        ];
+      })
+      .addCase(editProductAsync.rejected, (state) => {
         state.status = "failed";
       });
   },
@@ -85,5 +119,6 @@ export const {
 } = productsSlice.actions;
 
 export const selectProducts = (state) => state.products.products;
+export const selectSelectedProduct = (state) => state.products.selectedProduct;
 
 export default productsSlice.reducer;

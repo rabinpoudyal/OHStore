@@ -17,6 +17,15 @@ module Api
         end
       end
 
+      def update
+        @product = Product.find(params[:id])
+        if @product.update(product_params)
+          render json: ProductSerializer.new(@product).serializable_hash, status: :ok
+        else
+          render json: @product.errors, status: :unprocessable_entity
+        end
+      end
+
       def destroy
         @product = Product.find(params[:id])
         if @product.destroy
