@@ -6,6 +6,7 @@ import "./App.css";
 import Login from "./features/login/Login";
 import Spinner from "./Spinner";
 import Products from "./features/products/Product";
+import StoreNavbar from "./Navbar";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
 
 function App({ isLoading }) {
   return (
-    <div className="App container mt-5">
+    <div className="">
+      <StoreNavbar />
       <Spinner isLoading={isLoading} />
       <RouterProvider router={router}></RouterProvider>
     </div>

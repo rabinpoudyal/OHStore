@@ -48,6 +48,7 @@ gem 'elasticsearch-rails'
 
 gem 'jsonapi-serializer'
 gem 'rack-cors'
+gem 'devise_token_auth'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

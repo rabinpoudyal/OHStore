@@ -1,7 +1,10 @@
 
-// A mock function to mimic making an async request for data
-export function serverLogin(email, password) {
-    return new Promise((resolve) =>
-      setTimeout(() => resolve({ data: { email: email, password: password } }), 5000)
-    );
-  }
+import axios from 'axios';
+import { SIGN_IN } from '../../endpoints';
+
+export function signIn({ email, password }) {
+  return axios.post(SIGN_IN, {
+    email,
+    password,
+  });
+}

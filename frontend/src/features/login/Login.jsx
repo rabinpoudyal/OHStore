@@ -1,6 +1,6 @@
 import React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import { loginAsync, selectEmail, selectPassword, setEmail, setPassword } from "./loginSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { loginAsync, selectEmail, selectIsSignedIn, selectPassword, setEmail, setPassword } from "./loginSlice";
 import {
   Container,
   Row,
@@ -11,9 +11,10 @@ import {
   Button,
 } from "reactstrap";
 
-const Login = ({ }) => {
+const Login = () => {
   const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
+  const isSignedIn = useSelector(selectIsSignedIn);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -32,7 +33,7 @@ const Login = ({ }) => {
                 id="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => dispatch(setEmail(e.target?.value))}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
               />
             </FormGroup>
             <FormGroup>
@@ -41,7 +42,7 @@ const Login = ({ }) => {
                 placeholder="Enter your password"
                 id="password"
                 value={password}
-                onChange={(e) => dispatch(setPassword(e.target?.value))}
+                onChange={(e) => dispatch(setPassword(e.target.value))}
               />
             </FormGroup>
             <Button type="submit" color="primary" block>
@@ -54,5 +55,4 @@ const Login = ({ }) => {
   );
 };
 
-// export default Login;
-export default connect(null, { })(Login);
+export default Login;

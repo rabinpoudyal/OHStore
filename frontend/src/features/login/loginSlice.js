@@ -1,9 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { serverLogin } from './loginAPI';
+import { signIn } from './loginAPI';
 
 const initialState = {
   email: '',
   password: '',
+  accessToken: '',
+  uid: '',
+  client: '',
+  isLoggedIn: false,
+  status: 'idle',
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -13,9 +18,9 @@ const initialState = {
 // typically used to make async requests.
 export const loginAsync = createAsyncThunk(
   'login/login',
-  async (email, password) => {
-    const response = await serverLogin(email, password);
-    return response.data;
+  async ({ email, password }) => {
+    const response = await signIn({ email, password });
+    return response.headers;
   }
 );
 
@@ -40,8 +45,14 @@ export const loginSlice = createSlice({
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        // state.value += action.payload;
-      });
+        state.accessToken = action.payload.accessToken;
+        state.uid = action.payload.uid;
+        state.client = action.payload.client;
+        state.isLoggedIn = true;
+      })
+      .addCase(loginAsync.rejected, (state, action) => {
+        state.status = 'idle';
+      })
   },
 });
 
@@ -50,8 +61,9 @@ export const { login, setEmail, setPassword } = loginSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectEmail = (state) => state.email;
-export const selectPassword = (state) => state.password;
+export const selectEmail = (state) => state.login.email;
+export const selectPassword = (state) => state.login.password;
+export const selectIsSignedIn = (state) => state.login.isLoggedIn;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
