@@ -8,7 +8,7 @@ module Api
                       Product.search(product_search_params)
                     else
                       Product.all
-                      #Product.search({}, per_page: 10)
+                      # Product.search({}, per_page: 10)
                     end
         render json: ProductSerializer.new(@products).serializable_hash
       end

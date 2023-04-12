@@ -46,10 +46,10 @@ gem 'bootsnap', require: false
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
-gem 'jsonapi-serializer'
-gem 'rack-cors'
 gem 'devise_token_auth'
+gem 'jsonapi-serializer'
 gem 'pundit'
+gem 'rack-cors'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

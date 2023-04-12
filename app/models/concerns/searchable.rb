@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Searchable
   extend ActiveSupport::Concern
 
@@ -11,6 +13,5 @@ module Searchable
       indexes :gtin, type: :keyword
       indexes :availability, type: :boolean
     end
-
   end
 end
