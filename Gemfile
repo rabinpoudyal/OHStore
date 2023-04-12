@@ -49,6 +49,7 @@ gem 'elasticsearch-rails'
 gem 'jsonapi-serializer'
 gem 'rack-cors'
 gem 'devise_token_auth'
+gem 'pundit'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

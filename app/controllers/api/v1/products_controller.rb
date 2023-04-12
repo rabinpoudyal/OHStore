@@ -4,11 +4,16 @@ module Api
   module V1
     class ProductsController < ApiController
       def index
-        @products = Product.all #search(product_search_params)
+        @products = if product_search_params.present?
+                      Product.search(product_search_params)
+                    else
+                      Product.all
+                      #Product.search({}, per_page: 10)
+                    end
         render json: ProductSerializer.new(@products).serializable_hash
       end
 
-      def create 
+      def create
         @product = Product.new(product_params)
         if @product.save
           render json: ProductSerializer.new(@product).serializable_hash, status: :created
@@ -38,7 +43,7 @@ module Api
       private
 
       def product_search_params
-        params.permit(:name, :price, :gtin, :availability)
+        params.permit(:name, :page)
       end
 
       def product_params
