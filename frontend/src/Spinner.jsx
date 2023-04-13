@@ -1,4 +1,5 @@
 import React from 'react';
+import { Progress } from 'reactstrap';
 // import { connect } from 'react-redux';
 
 const Spinner = ({ isLoading }) => {
@@ -8,11 +9,7 @@ const Spinner = ({ isLoading }) => {
   }
 
   return (
-    <div className="d-flex justify-content-center my-5">
-      <div className="spinner-border" role="status">
-        <span className="sr-only"></span>
-      </div>
-    </div>
+    <Progress striped color="danger" value="100" />
   );
 };
 

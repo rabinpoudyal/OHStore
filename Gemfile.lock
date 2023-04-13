@@ -256,6 +256,9 @@ GEM
     rspec-support (3.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    searchkick (5.2.3)
+      activemodel (>= 5.2)
+      hashie
     selenium-webdriver (4.8.6)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -320,6 +323,7 @@ DEPENDENCIES
   rails (~> 7.0.4)
   redis (~> 4.0)
   rspec-rails (~> 5.0)
+  searchkick
   selenium-webdriver
   shoulda-matchers (~> 5.0)
   sprockets-rails

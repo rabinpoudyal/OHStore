@@ -4,11 +4,10 @@ module Api
   module V1
     class ProductsController < ApplicationController
       def index
-        @products = if product_search_params.present?
-                      Product.search(product_search_params)
+        @products = if product_search_params[:name].present?
+                      Product.search(product_search_params[:name]).results
                     else
-                      Product.all
-                      # Product.search({}, per_page: 10)
+                      Product.search(limit: 10).results
                     end
         render json: ProductSerializer.new(@products).serializable_hash
       end

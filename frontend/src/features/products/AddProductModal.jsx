@@ -1,107 +1,166 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
+  // Form,
   FormGroup,
   Label,
-  Input,
-} from 'reactstrap';
-import { selectSelectedProduct, setSelectedProduct } from './productsSlice';
+  Row,
+  Col,
+} from "reactstrap";
+import { Form, Field, Radio, RadioGroup } from "@availity/form";
+import * as yup from "yup";
+// import { FilePicker } from '@availity/form-upload';
+// import { CustomInput } from 'reactstrap';
+
+
+import { selectSelectedProduct, setSelectedProduct } from "./productsSlice";
 
 const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
-    const selectedProduct = useSelector(selectSelectedProduct);
-    const dispatch = useDispatch();
-  
-    const handleChange = (event) => {
-      const { name, value, checked, type } = event.target;
-      const val = type === 'checkbox' ? checked : value;
-      
-      dispatch(setSelectedProduct({
-        ...selectedProduct,
-        [name]: val,
-      }));
-    };
+  const selectedProduct = useSelector(selectSelectedProduct);
+  const dispatch = useDispatch();
 
-    const handleSubmit = (event) => {
-      if (selectedProduct.id) {
-        editProduct(selectedProduct);
-      } else {
-        addProduct(selectedProduct);
-      }
-    };
-  
-    return (
-      <Modal isOpen={isOpen} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add New Product</ModalHeader>
+  const handleSubmit = (product) => {
+    console.log("product", product);
+    if (product.id) {
+      editProduct(product);
+    } else {
+      addProduct(product);
+    }
+  };
+
+  return (
+    <Modal isOpen={isOpen} toggle={toggle}>
+      <ModalHeader toggle={toggle}>Add New Product</ModalHeader>
+      <Form
+        initialValues={{
+          ...selectedProduct,
+          image: undefined
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={yup.object().shape({
+          name: yup.string().required("Name is required"),
+          price: yup.number().required("Price is required"),
+        })}
+      >
         <ModalBody>
-          <Form onSubmit={handleSubmit}>
-            <FormGroup>
-              <Label for="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                value={selectedProduct.name}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="price">Price</Label>
-              <Input
-                type="number"
-                name="price"
-                id="price"
-                value={selectedProduct.price}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup check>
-              <Label check>
-                <Input
-                  type="checkbox"
-                  checked={selectedProduct.availability}
-                  onChange={handleChange}
+          <FormGroup className="mt-3" for="name">
+            <Row>
+              <Col md="3">
+                <Label for="name">Name*</Label>
+              </Col>
+              <Col md="9">
+                <Field
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Enter product name"
                 />
-                {' '}
-                Available
-              </Label>
-            </FormGroup>
-            <FormGroup>
-              <Label for="description">Description</Label>
-              <Input
-                type="textarea"
-                name="description"
-                id="description"
-                value={selectedProduct.description}
-                onChange={handleChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="gtin">GTIN</Label>
-              <Input
-                type="text"
-                name="gtin"
-                id="gtin"
-                value={selectedProduct.gtin}
-                onChange={handleChange}
-                required
-              />
-            </FormGroup>
-          </Form>
+              </Col>
+            </Row>
+          </FormGroup>
+
+          <FormGroup className="mt-3" for="price">
+            <Row>
+              <Col md="3">
+                <Label for="price">Price*</Label>
+              </Col>
+              <Col md="9">
+                <Field
+                  type="number"
+                  name="price"
+                  id="price"
+                  placeholder="Enter product price"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+
+          <FormGroup className="mt-3" for="availability">
+            <Row>
+              <Col md="3">
+                <Label for="availability">Availability</Label>
+              </Col>
+              <Col md="9">
+                <RadioGroup name="availability" label="">
+                  <Radio
+                    name="availability"
+                    label="Yes"
+                    value={true === selectedProduct.availability}
+                  />
+                  <Radio
+                    name="availability"
+                    label="No"
+                    value={false === selectedProduct.availability}
+                  />
+                </RadioGroup>
+              </Col>
+            </Row>
+          </FormGroup>
+
+          <FormGroup className="mt-3" for="description">
+            <Row>
+              <Col md="3">
+                <Label for="description">Description</Label>
+              </Col>
+              <Col md="9">
+                <Field
+                  type="textarea"
+                  name="description"
+                  id="description"
+                  value={selectedProduct.description}
+                  placeholder="Enter product description"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+
+          <FormGroup className="mt-3" for="gtin">
+            <Row>
+              <Col md="3">
+                <Label for="gtin">GTIN</Label>
+              </Col>
+              <Col md="9">
+                <Field
+                  type="text"
+                  name="gtin"
+                  id="gtin"
+                  placeholder="Enter product GTIN"
+                />
+              </Col>
+            </Row>
+          </FormGroup>
+
+          <FormGroup className="mt-3" for="gtin">
+            <Row>
+              <Col md="3">
+                <Label for="image">Product Image</Label>
+              </Col>
+              <Col md="9">
+                {/* <FilePicker
+                  name="image"
+                  tag={CustomInput}
+                /> */}
+              </Col>
+            </Row>
+          </FormGroup>
+
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSubmit}>Save</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+          <Button color="dark" type="submit">
+            Save
+          </Button>{" "}
         </ModalFooter>
-      </Modal>
-    );
-  };
+      </Form>
+    </Modal>
+  );
+};
 
 export default AddProductModal;

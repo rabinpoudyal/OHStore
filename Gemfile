@@ -50,6 +50,8 @@ gem 'devise_token_auth'
 gem 'jsonapi-serializer'
 gem 'pundit'
 gem 'rack-cors'
+gem "searchkick"
+
 
 # Use Sass to process CSS
 # gem "sassc-rails"
