@@ -10,6 +10,7 @@ import {
   Input,
   Button,
 } from "reactstrap";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
   const email = useSelector(selectEmail);
@@ -21,6 +22,10 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginAsync({ email, password }));
   };
+
+  if (isSignedIn) {
+    return <Navigate to="/products" />;
+  }
 
   return (
     <Container className="vh-100 d-flex align-items-center">

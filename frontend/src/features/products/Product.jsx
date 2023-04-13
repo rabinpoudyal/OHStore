@@ -23,10 +23,12 @@ import {
 } from "./productsSlice";
 
 import styles from "./Products.module.css";
+import { selectIsSignedIn } from "../login/loginSlice";
 
 const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
+  const isLoggedIn = useSelector(selectIsSignedIn);
 
   const [addProductModalIsOpen, setAddProductModalIsOpen] = useState(false);
   const toggle = () => setAddProductModalIsOpen(!addProductModalIsOpen);
@@ -88,23 +90,27 @@ const Products = () => {
           <h1>Products</h1>
         </Col>
         <Col sm="4">
-          <Button color="dark" onClick={addNewProduct}>
-            Add New
-          </Button>
+          {isLoggedIn && (
+            <Button color="dark" onClick={addNewProduct}>
+              Add New
+            </Button>
+          )}
         </Col>
       </Row>
       <Row>
+        <div className="d-flex justify-content-between flex-wrap gap-0">
         {products.map((product, index) => {
           return (
-            <Col sm="3" key={index}>
-              <Card className="mt-4 h-25">
+            <div key={index}>
+              <Card className="" style={{ width: "15", height: "5" }}>
                 <CardImg
-                  top
-                  style={{ objectFit: "cover" }}
-                  src="https://cdn.metcash.media/image/upload/w_1500,h_1500,c_pad,b_auto/alm-online/images/581103.jpg"
+                  // className="img-fluid"
+                  style={{ height: "10" }}
+                  src="https://cdn.metcash.media/image/upload/w_100,h_100,c_pad,b_auto/alm-online/images/581103.jpg"
                   alt={product.name}
                 />
-                <CardBody>
+                <CardBody></CardBody>
+                <CardFooter>
                   <div className="d-flex justify-content-between">
                     <div className={styles.productTitle}>{product.name}</div>
                     <div className={styles.productPrice}>
@@ -112,23 +118,29 @@ const Products = () => {
                     </div>
                   </div>
                   <CardText>{product.description}</CardText>
-                </CardBody>
-                <CardFooter>
-                  <Button color="primary">Add to cart</Button>
-                  <Button
-                    color="danger"
-                    onClick={() => destroyProduct(product.id)}
-                  >
-                    Delete
-                  </Button>
-                  <Button color="warning" onClick={() => editProduct(product)}>
-                    Edit
-                  </Button>
+                  <Button color="dark" outline>Add to cart</Button>
+                  {isLoggedIn && (
+                    <div>
+                      <Button
+                        color="danger"
+                        onClick={() => destroyProduct(product.id)}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        color="warning"
+                        onClick={() => editProduct(product)}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  )}
                 </CardFooter>
               </Card>
-            </Col>
+            </div>
           );
         })}
+        </div>
       </Row>
 
       <AddProductModal

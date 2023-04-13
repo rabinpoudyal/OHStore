@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class ProductsController < ApiController
+    class ProductsController < ApplicationController
       def index
         @products = if product_search_params.present?
                       Product.search(product_search_params)
