@@ -24,16 +24,6 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@availity/form-upload@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@availity/form-upload/-/form-upload-0.11.1.tgz#478d77155195d37472b82d527001178de6f2b95b"
-  integrity sha512-XNQX8whnPzLjPrPLLucr85JmtQe6ozobUklUSCU7CQJE5KNH1u04iro4hJ2KGDy1JnWCWavpHxiMB9xadBuwrw==
-  dependencies:
-    "@availity/icon" "0.11.1"
-    "@availity/progress" "1.5.1"
-    classnames "^2.3.1"
-    uuid "^8.3.2"
-
 "@availity/form@^1.7.2":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@availity/form/-/form-1.7.2.tgz#463d1acf915fa916832c96df3e34741b76657125"
@@ -64,14 +54,6 @@
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@availity/message-core/-/message-core-6.1.0.tgz#8fa2d5306b760b8a6a5241dfc6e24ac099f82d00"
   integrity sha512-ifmApn6gtlWqrVYZs3H4JazjcOWFwRs+VKGDIDa1HGoDy3eSRe7/LQhkNjr0PyI+fJPDj63fJSsN2zXIMFWyxA==
-
-"@availity/progress@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@availity/progress/-/progress-1.5.1.tgz#91eeee4e81b011195a8505bc8571dedba816eccd"
-  integrity sha512-MLHuLFKu8gAv66k3raoirLKRabr2P4ict2jbSlPHRGVtSP2g16lcOH0Q5dFQ/Cgm6D3+uGPSMEiHcXDTAtlRXw==
-  dependencies:
-    classnames "^2.3.1"
-    lodash "^4.17.21"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.18.6", "@babel/code-frame@^7.21.4", "@babel/code-frame@^7.8.3":
   version "7.21.4"
@@ -4521,6 +4503,13 @@ file-loader@^6.2.0:
   dependencies:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
+
+file-selector@0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.2.4.tgz#7b98286f9dbb9925f420130ea5ed0a69238d4d80"
+  integrity sha512-ZDsQNbrv6qRi1YTDOEWzf5J2KjZ9KMI1Q2SGeTkCJmNNW25Jg4TW4UMcmoqcg4WrAyKRcpBXdbWRxkfrOzVRbA==
+  dependencies:
+    tslib "^2.0.3"
 
 filelist@^1.0.1:
   version "1.0.4"
@@ -9063,6 +9052,13 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+use-file-picker@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/use-file-picker/-/use-file-picker-1.6.1.tgz#1ed6aede4aa8950d04d06e18723e9019ef12f5c0"
+  integrity sha512-5ChNPXmy/WM1TyBTZmUAGZtJ3gqmeWa+xgYF/pxnLxVGdCaLsSnJhyf87/dhO1Snnl6uTdOfcdGTnuQbuyd3Jw==
+  dependencies:
+    file-selector "0.2.4"
 
 use-sync-external-store@^1.0.0:
   version "1.2.0"

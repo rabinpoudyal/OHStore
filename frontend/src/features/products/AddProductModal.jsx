@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Button,
   Modal,
@@ -14,23 +13,30 @@ import {
 } from "reactstrap";
 import { Form, Field, Radio, RadioGroup } from "@availity/form";
 import * as yup from "yup";
-// import { FilePicker } from '@availity/form-upload';
-// import { CustomInput } from 'reactstrap';
+import { useFilePicker } from "use-file-picker";
 
-
-import { selectSelectedProduct, setSelectedProduct } from "./productsSlice";
+import { selectSelectedProduct } from "./productsSlice";
 
 const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
   const selectedProduct = useSelector(selectSelectedProduct);
-  const dispatch = useDispatch();
 
-  const handleSubmit = (product) => {
-    console.log("product", product);
+  const [openFileSelector, { filesContent }] = useFilePicker({
+    accept: "image/*",
+    multiple: false,
+    readAs: "DataURL",
+  });
+
+  const handleSubmit = async (product) => {
+    if (filesContent) {
+      product.image = await (await fetch(filesContent[0].content)).blob();
+    }
+
     if (product.id) {
       editProduct(product);
     } else {
       addProduct(product);
     }
+    toggle();
   };
 
   return (
@@ -39,7 +45,7 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
       <Form
         initialValues={{
           ...selectedProduct,
-          image: undefined
+          image: undefined,
         }}
         onSubmit={handleSubmit}
         validationSchema={yup.object().shape({
@@ -112,7 +118,6 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
                   type="textarea"
                   name="description"
                   id="description"
-                  value={selectedProduct.description}
                   placeholder="Enter product description"
                 />
               </Col>
@@ -141,14 +146,20 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
                 <Label for="image">Product Image</Label>
               </Col>
               <Col md="9">
-                {/* <FilePicker
-                  name="image"
-                  tag={CustomInput}
-                /> */}
+                <Button color="primary" onClick={() => openFileSelector()}>
+                  Select Image{" "}
+                </Button>
+                {filesContent &&
+                  filesContent.length > 0 &&
+                  filesContent.map((file, index) => (
+                    <div>
+                      <div key={index}>{file.name}</div>
+                      <img src={file.content} width={100} />
+                    </div>
+                  ))}
               </Col>
             </Row>
           </FormGroup>
-
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

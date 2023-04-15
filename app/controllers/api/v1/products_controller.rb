@@ -46,7 +46,7 @@ module Api
       end
 
       def product_params
-        params.require(:product).permit(:name, :price, :gtin, :availability, :description)
+        params.require(:product).permit(:name, :price, :gtin, :availability, :description, :image)
       end
     end
   end

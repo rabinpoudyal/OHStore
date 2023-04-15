@@ -11,7 +11,11 @@ export function getProducts(filters) {
 }
 
 export function addProduct(product) {
-  return axios.post(GET_PRODUCTS, product);
+  return axios.post(GET_PRODUCTS, product, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 export function editProduct(product, id) {

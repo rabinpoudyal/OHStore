@@ -70,6 +70,7 @@ const Products = () => {
       availability: true,
       description: "",
       gtin: "",
+      image: {},
     };
     dispatch(setSelectedProduct(product));
     toggle();
@@ -102,7 +103,7 @@ const Products = () => {
         <Col md="2">
           <div className="d-flex justify-content-end">
             {!isLoggedIn && (
-              <Button color="dark" onClick={addNewProduct}>
+              <Button outline color="dark" onClick={addNewProduct}>
                 Add New
               </Button>
             )}
@@ -110,62 +111,68 @@ const Products = () => {
         </Col>
       </Row>
       <Row>
-        <Col md="5">
-          <Input
-            type="text"
-            placeholder="Search Products..."
-            width={10}
-            className={styles.searchBar}
-            onChange={handleSearch}
-          />
+        <Col md="2">
+          <div className="d-flex justify-content-between mt-5">
+            <div>
+            <Input
+              type="text"
+              placeholder="Search Products..."
+              className={styles.searchBar}
+              onChange={handleSearch}
+            />
+            </div>
+          </div>
         </Col>
-      </Row>
-      <Row>
-        <div className="d-flex justify-content-between flex-wrap gap-0 mt-5">
-          {products.map((product, index) => {
-            return (
-              <div key={index}>
-                <Card className={styles.productCard}> 
-                  <CardImg
-                    // className="img-fluid"
-                    style={{ height: "10" }}
-                    src="https://cdn.metcash.media/image/upload/w_100,h_100,c_pad,b_auto/alm-online/images/581103.jpg"
-                    alt={product.name}
-                  />
-                  <CardBody></CardBody>
-                  <CardFooter>
-                    <div className="d-flex justify-content-between">
-                      <div className={styles.productTitle}>{product.name}</div>
+        <Col md="10">
+          <div className="d-flex justify-content-between flex-wrap gap-5 mt-5">
+            {products.map((product, index) => {
+              return (
+                <div key={index}>
+                  <div className={styles.productCard}>
+                    <div className={styles.productImage}>
+                      <img
+                        src={product.product_image}
+                        alt={product.name}
+                        height={300}
+                        width={300}
+                      />
+                    </div>
+                    <div className={styles.productDetails}>
+                      <div className={styles.productTitle}>{_.truncate(product.name)}</div>
                       <div className={styles.productPrice}>
                         {formatter.format(product.price)}
                       </div>
-                    </div>
-                    <CardText>{product.description}</CardText>
-                    <Button color="dark" outline>
-                      Add to cart
-                    </Button>
-                    {isLoggedIn && (
-                      <div>
-                        <Button
-                          color="danger"
-                          onClick={() => destroyProduct(product.id)}
-                        >
-                          Delete
+                      <div className="d-flex justify-content-between gap-2" inline>
+                        <Button color="dark" outline>
+                          Add to cart
                         </Button>
-                        <Button
-                          color="warning"
-                          onClick={() => editProduct(product)}
-                        >
-                          Edit
-                        </Button>
+                        {!isLoggedIn && (
+                          <>
+                            <Button
+                              color="dark"
+                              outline
+                              onClick={() => editProduct(product)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              color="dark"
+                              outline
+                              className={styles.button}
+                              onClick={() => destroyProduct(product.id)}
+                            >
+                              Delete
+                            </Button>
+                          </>
+                        )}
                       </div>
-                    )}
-                  </CardFooter>
-                </Card>
-              </div>
-            );
-          })}
-        </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Col>
       </Row>
 
       <AddProductModal

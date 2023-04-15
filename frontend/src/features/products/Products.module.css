@@ -12,6 +12,15 @@
     margin-bottom: 1rem;
 }
 
-.searchBar {
-    width: 5rem;
+.productCard{
+    width: 20rem;
+    height: 35rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }

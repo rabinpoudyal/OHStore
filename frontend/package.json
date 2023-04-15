@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@availity/form": "^1.7.2",
-    "@availity/form-upload": "^0.11.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -20,6 +19,7 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "reactstrap": "^8.10.1",
+    "use-file-picker": "^1.6.1",
     "web-vitals": "^2.1.4",
     "yup": "0.31.1"
   },

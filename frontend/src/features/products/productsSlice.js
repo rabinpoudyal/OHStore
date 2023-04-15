@@ -25,6 +25,7 @@ export const getProductsAsync = createAsyncThunk(
 export const addProductAsync = createAsyncThunk(
   "create/products",
   async (product) => {
+    console.log(product)
     const response = await addProduct(product);
     return response.data;
   }
