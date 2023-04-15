@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { signIn } from './loginAPI';
+import { signIn, signOut } from './loginAPI';
 
 const initialState = {
   email: '',
@@ -16,6 +16,14 @@ export const loginAsync = createAsyncThunk(
   'login/login',
   async ({ email, password }) => {
     const response = await signIn({ email, password });
+    return response.headers;
+  }
+);
+
+export const logoutAsync = createAsyncThunk(
+  'login/logout',
+  async () => {
+    const response = await signOut();
     return response.headers;
   }
 );

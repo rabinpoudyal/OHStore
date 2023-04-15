@@ -8,3 +8,13 @@ export function signIn({ email, password }) {
     password,
   });
 }
+
+export function signOut() {
+  return axios.delete(SIGN_IN, {
+    headers: {
+      'access-token': localStorage.getItem('accessToken'),
+      client: localStorage.getItem('client'),
+      uid: localStorage.getItem('uid'),
+    },
+  });
+}

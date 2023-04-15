@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
-import { logout, selectIsSignedIn } from "./features/login/loginSlice";
+import {
+  logout,
+  logoutAsync,
+  selectIsSignedIn,
+} from "./features/login/loginSlice";
 import { Link } from "react-router-dom";
 import logo from "./logo.svg";
 
@@ -11,7 +15,7 @@ const StoreNavbar = () => {
   const isLoggedIn = useSelector(selectIsSignedIn);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutAsync()).then(() => dispatch(logout()));
   };
 
   return (
