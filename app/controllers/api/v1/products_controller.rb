@@ -8,14 +8,13 @@ module Api
 
       def index
         @products = if product_search_params[:name].present?
-                      Product.search(product_search_params[:name]).results
+                      options = { clear: true }
+                      Product.search(product_search_params[:name], per_page: 10, page: params[:page]).results
                     else
+                      options = { clear: false }
                       Product.search(per_page: 10, page: params[:page]).results
                     end
-        # has_next_page = @products.total_pages > @products.current_page
-        render json: ProductSerializer.new(@products, { meta: {
-                                             has_next_page: false
-                                           } }).serializable_hash
+        render json: ProductSerializer.new(@products, { meta: options }).serializable_hash
       end
 
       def create

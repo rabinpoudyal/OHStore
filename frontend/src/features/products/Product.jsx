@@ -104,7 +104,7 @@ const Products = () => {
   const searchHandler = useCallback(
     _.debounce((search) => {
       dispatch(getProductsAsync({ name: search }));
-    }, 3000),
+    }, 1000),
     []
   );
 
@@ -131,7 +131,7 @@ const Products = () => {
         </Col>
       </Row>
       <Row>
-        <Col md="2">
+        <Col md="3">
           <div className="d-flex justify-content-between mt-5">
             <div>
             <Input
@@ -143,11 +143,11 @@ const Products = () => {
             </div>
           </div>
         </Col>
-        <Col md="10">
-          <div className="d-flex justify-content-between flex-wrap gap-5 mt-5"> 
+        <Col md="12">
+          <div className="d-flex justify-content-between flex-wrap mt-5"> 
             {products.map((product, index) => {
               return (
-                <div key={index}>
+                <div key={index} className="mt-2">
                   <div className={styles.productCard}>
                     <div className={styles.productImage}>
                       <img

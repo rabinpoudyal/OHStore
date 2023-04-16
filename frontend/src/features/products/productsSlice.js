@@ -26,7 +26,6 @@ export const getProductsAsync = createAsyncThunk(
 export const addProductAsync = createAsyncThunk(
   "create/products",
   async (product) => {
-    console.log(product);
     const response = await addProduct(product);
     return response.data;
   }
@@ -64,7 +63,11 @@ export const productsSlice = createSlice({
       .addCase(getProductsAsync.fulfilled, (state, action) => {
         const products = dataFormatter.deserialize(action.payload);
         state.status = "idle";
-        state.products = [ ...state.products, ...products];
+        if(action.payload.meta.clear) {
+          state.products = products;
+        } else {
+          state.products = [ ...state.products, ...products];
+        }
       })
       .addCase(getProductsAsync.rejected, (state) => {
         state.status = "failed";
