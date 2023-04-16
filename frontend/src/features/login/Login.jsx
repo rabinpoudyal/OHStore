@@ -14,6 +14,7 @@ import * as yup from "yup";
 
 import { Navigate } from "react-router-dom";
 import Alert from "../../Alert";
+import { FormattedMessage } from "react-intl";
 
 const Login = () => {
   const email = useSelector(selectEmail);
@@ -64,7 +65,7 @@ const Login = () => {
               />
             </FormGroup>
             <Button type="submit" color="dark" block className="mt-3">
-              Login
+              <FormattedMessage id="login" />
             </Button>
           </Form>
         </Col>
