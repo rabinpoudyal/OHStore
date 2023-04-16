@@ -38,6 +38,19 @@
 - [x] Internationalization for frontend
 - [x] Stopwords for Elasticsearch 
 
+## Security TODOs
+- [x] Add CSRF token to API calls
+- [x] File upload validation
+- [x] UUID for IDs
+- [x] Add CORS
+- [x] Add rate limiting
+- [x] Add XSS protection(React Helmet)
+- [x] Add Content Security Policy
+- [x] Add HSTS
+- [x] Add X-Frame-Options
+- [x] Add X-Content-Type-Options
+- [x] Add X-XSS-Protection
+
 ## Limitations
 - [x] Could not host on Heroku due to Elasticsearch addon
 
