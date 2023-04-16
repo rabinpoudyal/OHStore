@@ -55,7 +55,7 @@ const Products = () => {
   }, [dispatch, hasMore, pageNumber]);
 
   useEffect(() => {
-    setHasMore(products.length % 10 === 0);
+    setHasMore(products.length > 0);
   }, [products]);
 
   const destroyProduct = (id) => {
@@ -91,6 +91,8 @@ const Products = () => {
       description: "",
       gtin: "",
       image: {},
+      brand_id: 1,
+      category_id: 1,
     };
     dispatch(setSelectedProduct(product));
     toggle();
@@ -122,7 +124,7 @@ const Products = () => {
         </Col>
         <Col md="2">
           <div className="d-flex justify-content-end">
-            {!isLoggedIn && (
+            {isLoggedIn && (
               <Button outline color="dark" onClick={addNewProduct}>
                 Add New
               </Button>
@@ -166,7 +168,7 @@ const Products = () => {
                         <Button color="dark" outline>
                           Add to cart
                         </Button>
-                        {!isLoggedIn && (
+                        {isLoggedIn && (
                           <>
                             <Button
                               color="dark"

@@ -3,6 +3,9 @@
 module Api
   module V1
     class ProductsController < ApiController
+
+      skip_before_action :authenticate_api_v1_user!, only: [:index]
+
       def index
         @products = if product_search_params[:name].present?
                       options = { clear: true }

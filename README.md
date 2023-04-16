@@ -13,6 +13,19 @@
 * [React](https://facebook.github.io/react/)
 * [Redux](http://redux.js.org/)
   
+## Main Features
+- [x] Search products by name using Elasticsearch
+- [x] Infinite scroll for products with pagination
+- [x] Token based authentication for API
+- [x] XML import service for products
+- [x] Active Storage for product images OR Image URL
+- [x] React frontend with Redux for state management
+- [x] Associations between products and categories
+- [x] Associations between products and brands 
+- [x] View only products that are in stock
+- [x] View only access for Non-Logged in users
+- [x] Add/Edit/Delete products for Admin users
+
 ## Installation
 Once you have the above dependencies installed, you can install the application by running the following commands:
 
@@ -66,3 +79,7 @@ Rubocop can be run with the following command:
 ```bash
 $ bundle exec rubocop
 ```
+
+## Known Issues
+* Search can be improved for better results
+* Authentication in API (TODO)
