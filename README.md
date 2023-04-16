@@ -16,7 +16,7 @@
 ## Main Features
 - [x] Search products by name using Elasticsearch
 - [x] Infinite scroll for products with pagination
-  ![Infinite Scroll](screenshots/6.png)
+![Infinite Scroll](screenshots/6.gif)
 - [x] Token based authentication for API
 - [x] XML import service for products
 - [x] Active Storage for product images OR Image URL
