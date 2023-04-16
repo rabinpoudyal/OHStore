@@ -5,13 +5,12 @@ class XmlImportService < BaseService
   attr_accessor :file_name
 
   def initialize(file_name:)
-    super
-    # self.file_name = '/Users/rabin/code/OHStore/products.rss'
+    super()
     self.file_name = file_name
   end
 
   def call
-    doc = Nokogiri::XML(URI.parse(file_name).open)
+    doc = Nokogiri::XML(URI.open(file_name))
 
     ActiveRecord::Base.transaction do
       doc.xpath('//item').each do |item|

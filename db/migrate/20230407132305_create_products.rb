@@ -7,7 +7,7 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.decimal :price, precision: 8, scale: 2, null: false
       t.boolean :availability, default: true
       t.text :description
-      t.string :gtin, null: false
+      t.string :gtin 
 
       t.timestamps
     end

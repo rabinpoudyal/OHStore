@@ -9,5 +9,4 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :availability, inclusion: { in: [true, false] }
-  validates :image, attached: true, content_type: %w[image/png image/jpg image/jpeg]
 end

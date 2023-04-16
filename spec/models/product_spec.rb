@@ -10,7 +10,6 @@ RSpec.describe Product, type: :model do
     it { should have_db_column(:price).of_type(:decimal).with_options(precision: 8, scale: 2, null: false) }
     it { should have_db_column(:availability).of_type(:boolean).with_options(default: true) }
     it { should have_db_column(:description).of_type(:text) }
-    it { should have_db_column(:gtin).of_type(:string).with_options(null: false) }
     it { should have_db_column(:created_at).of_type(:datetime).with_options(null: false) }
     it { should have_db_column(:updated_at).of_type(:datetime).with_options(null: false) }
   end
@@ -18,6 +17,8 @@ RSpec.describe Product, type: :model do
   # Ensure the Product model has the required associations
   describe 'associations' do
     # Add your associations tests here
+    it { should belong_to(:brand) }
+    it { should belong_to(:category) }
   end
 
   # Ensure the Product model has the required validations
