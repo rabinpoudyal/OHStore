@@ -34,6 +34,8 @@
 - [x] Frontend tests
 - [x] React app deployment
 - [x] Better search results for products(autocomplete, suggestions, etc.)
+- [x] Internationalization for frontend
+- [x] Stopwords for Elasticsearch 
 
 ## Limitations
 - [x] Could not host on Heroku due to Elasticsearch addon
@@ -92,6 +94,8 @@ $ bundle exec rubocop
 ```
 
 ## Screenshots
-![Products]("./../screenshots/Screenshot%202023-04-16%20at%2011.09.54%20pm.png")
-![Login]("./../screenshots/Screenshot%202023-04-16%20at%2011.17.27%20pm.png")
-![Logged In]("./../screenshots/Screenshot%202023-04-16%20at%2011.18.31%20pm.png")
+![Products](screenshots/1.png)
+![Login](screenshots/2.png)
+![Logged In](screenshots/3.png)
+![Add Product](screenshots/4.png)
+![Spinner](screenshots/5.png)
