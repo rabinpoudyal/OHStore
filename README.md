@@ -1,25 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby version
+3.1.2
 
-Things you may want to cover:
-
-* Security approaches used in the application:
-1. Passwords are stored in the database as a hash of the password.
-2. All user input is sanitized before being used in the application.
-3. Auth tokens are changed on every login.
-4. IDs are used as UUIDs instead of sequential integers.
-5. Rate limiting is used to prevent brute force attacks.
-6. Routes are protected by auth tokens.
-7. Roles are used to restrict access to certain routes.
-8. CORS is used to restrict access to the API.
-9. CSRF tokens are used to prevent CSRF attacks.
-10. CSP is used to prevent XSS attacks.
-11. Input validation is used to prevent SQL injection attacks.
-12. Input sanitization is used to prevent XSS attacks.
-13. Strong passwords are enforced.
-14. Strong parameters are used to prevent mass assignment attacks.
+## Rails version
+7.0.4
 
 ## Tech Stack
 
@@ -27,9 +12,57 @@ Things you may want to cover:
 * [PostgreSQL](https://www.postgresql.org/)
 * [React](https://facebook.github.io/react/)
 * [Redux](http://redux.js.org/)
+  
+## Installation
+Once you have the above dependencies installed, you can install the application by running the following commands:
+
+```bash
+$ git clone
+$ cd
+$ bundle install
+$ rake db:create
+$ rake db:migrate
+$ rails c > XmlImportService.call(file_name: 'db/seeds/products.rss') 
+$ rails s
+```
+
+To run the react app, run the following commands:
+
+```bash
+$ cd frontend
+$ yarn install
+$ yarn start
+```
+
+## Importing products from rss feed
+
+```bash
+$ rake import:products
+```
 
 ## Installation
 
 * Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 * Install [PostgreSQL](https://www.postgresql.org/download/)
 * Install [Node.js](https://nodejs.org/en/download/)
+* Install [Yarn](https://yarnpkg.com/en/docs/install)
+* Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html)
+
+Elasticsearch is used for full text search. 
+
+
+## Running Tests
+
+Rspec tests can be run with the following command:
+
+```bash
+$ bundle exec rspec
+```
+
+## Running Rubocop
+
+Rubocop can be run with the following command:
+
+```bash
+$ bundle exec rubocop
+```

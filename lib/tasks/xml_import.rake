@@ -8,7 +8,10 @@ task :xml_import, [:file_name] => :environment do |_task, args|
     puts 'Please provide a file name. Usage: rake xml_import[file_name]'
   else
     file_name = args[:file_name]
-    XmlImportService.call(file_name)
+    XmlImportService.call(file_name:)
     puts "XML data imported from #{file_name}!"
   end
 end
+
+# Run the task with:
+# rake xml_import[products.xml]
