@@ -5,7 +5,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  // Form,
   FormGroup,
   Label,
   Row,
@@ -13,21 +12,29 @@ import {
 } from "reactstrap";
 import { Form, Field, Radio, RadioGroup } from "@availity/form";
 import * as yup from "yup";
+import Alert from "../../Alert"
 import { useFilePicker } from "use-file-picker";
 
-import { selectSelectedProduct } from "./productsSlice";
+import {
+  selectSelectedProduct,
+  selectErrors,
+  selectStatus,
+} from "./productsSlice";
 
 const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
   const selectedProduct = useSelector(selectSelectedProduct);
+  const errors = useSelector(selectErrors);
+  const status = useSelector(selectStatus);
 
-  const [openFileSelector, { filesContent }] = useFilePicker({
+  let [openFileSelector, { filesContent }] = useFilePicker({
     accept: "image/*",
     multiple: false,
     readAs: "DataURL",
   });
 
   const handleSubmit = async (product) => {
-    if (filesContent) {
+    if (filesContent.length > 0) {
+      console.log(filesContent);
       product.image = await (await fetch(filesContent[0].content)).blob();
     }
 
@@ -36,12 +43,19 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
     } else {
       addProduct(product);
     }
-    toggle();
+
+    console.log(errors);
+
+    if (status === "succeeded") {
+      filesContent = [];
+      toggle();
+    }
   };
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Add New Product</ModalHeader>
+      {errors && errors.length > 0 && <Alert errors={errors}></Alert>}
       <Form
         initialValues={{
           ...selectedProduct,
@@ -54,10 +68,10 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
         })}
       >
         <ModalBody>
-          <FormGroup className="mt-3" for="name">
+          <FormGroup className="mt-3">
             <Row>
               <Col md="3">
-                <Label for="name">Name*</Label>
+                <Label>Name*</Label>
               </Col>
               <Col md="9">
                 <Field
@@ -70,10 +84,10 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
             </Row>
           </FormGroup>
 
-          <FormGroup className="mt-3" for="price">
+          <FormGroup className="mt-3">
             <Row>
               <Col md="3">
-                <Label for="price">Price*</Label>
+                <Label>Price*</Label>
               </Col>
               <Col md="9">
                 <Field
@@ -86,10 +100,10 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
             </Row>
           </FormGroup>
 
-          <FormGroup className="mt-3" for="availability">
+          <FormGroup className="mt-3">
             <Row>
               <Col md="3">
-                <Label for="availability">Availability</Label>
+                <Label>Availability</Label>
               </Col>
               <Col md="9">
                 <RadioGroup name="availability" label="">
@@ -108,10 +122,10 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
             </Row>
           </FormGroup>
 
-          <FormGroup className="mt-3" for="description">
+          <FormGroup className="mt-3">
             <Row>
               <Col md="3">
-                <Label for="description">Description</Label>
+                <Label>Description</Label>
               </Col>
               <Col md="9">
                 <Field
@@ -124,10 +138,10 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
             </Row>
           </FormGroup>
 
-          <FormGroup className="mt-3" for="gtin">
+          <FormGroup className="mt-3">
             <Row>
               <Col md="3">
-                <Label for="gtin">GTIN</Label>
+                <Label>GTIN</Label>
               </Col>
               <Col md="9">
                 <Field
@@ -140,10 +154,10 @@ const AddProductModal = ({ isOpen, toggle, addProduct, editProduct }) => {
             </Row>
           </FormGroup>
 
-          <FormGroup className="mt-3" for="gtin">
+          <FormGroup className="mt-3">
             <Row>
               <Col md="3">
-                <Label for="image">Product Image</Label>
+                <Label>Product Image</Label>
               </Col>
               <Col md="9">
                 <Button color="primary" onClick={() => openFileSelector()}>

@@ -142,7 +142,7 @@ const Products = () => {
                       <div className={styles.productPrice}>
                         {formatter.format(product.price)}
                       </div>
-                      <div className="d-flex justify-content-between gap-2" inline>
+                      <div className="d-flex justify-content-between gap-2">
                         <Button color="dark" outline>
                           Add to cart
                         </Button>

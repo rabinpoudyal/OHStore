@@ -12,6 +12,7 @@ const initialState = {
   products: [],
   filters: {},
   selectedProduct: {},
+  errors: [],
 };
 
 export const getProductsAsync = createAsyncThunk(
@@ -25,7 +26,7 @@ export const getProductsAsync = createAsyncThunk(
 export const addProductAsync = createAsyncThunk(
   "create/products",
   async (product) => {
-    console.log(product)
+    console.log(product);
     const response = await addProduct(product);
     return response.data;
   }
@@ -76,38 +77,44 @@ export const productsSlice = createSlice({
         state.products = [...state.products].filter(
           (product) => product.id !== deletedProductId
         );
+        state.errors = [];
       })
-      .addCase(destroyProductAsync.rejected, (state) => {
+      .addCase(destroyProductAsync.rejected, (state, action) => {
         state.status = "failed";
+        state.errors = [action.error.message];
       })
       .addCase(addProductAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(addProductAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "succeeded";
         state.products = [
           ...state.products,
           dataFormatter.deserialize(action.payload),
         ];
+        state.errors = [];
       })
-      .addCase(addProductAsync.rejected, (state) => {
+      .addCase(addProductAsync.rejected, (state, action) => {
         state.status = "failed";
+        state.errors = [action.error.message];
       })
       .addCase(editProductAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(editProductAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        const newProductList = [...state.products].filter(item => {
-          return item.id !== action.payload.data.id
-        })
+        const newProductList = [...state.products].filter((item) => {
+          return item.id !== action.payload.data.id;
+        });
         state.products = [
           ...newProductList,
           dataFormatter.deserialize(action.payload),
         ];
+        state.errors = [];
       })
-      .addCase(editProductAsync.rejected, (state) => {
+      .addCase(editProductAsync.rejected, (state, action) => {
         state.status = "failed";
+        state.errors = [action.error.message];
       });
   },
 });
@@ -121,5 +128,7 @@ export const {
 
 export const selectProducts = (state) => state.products.products;
 export const selectSelectedProduct = (state) => state.products.selectedProduct;
+export const selectErrors = (state) => state.products.errors;
+export const selectStatus = (state) => state.products.status;
 
 export default productsSlice.reducer;
