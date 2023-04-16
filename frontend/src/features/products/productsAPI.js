@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GET_PRODUCTS } from "../../endpoints";
+import { selectAuthHeaders } from "../login/loginSlice";
 
 // A mock function to mimic making an async request for data
 export function getProducts(filters) {
@@ -11,6 +12,7 @@ export function getProducts(filters) {
 }
 
 export function addProduct(product) {
+  console.log(selectAuthHeaders())
   return axios.post(GET_PRODUCTS, product, {
     headers: {
       "Content-Type": "multipart/form-data",

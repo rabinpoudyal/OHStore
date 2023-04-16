@@ -3,16 +3,16 @@
 module Api
   module V1
     class ProductsController < ApiController
-
       skip_before_action :authenticate_api_v1_user!, only: [:index]
 
       def index
         @products = if product_search_params[:name].present?
                       options = { clear: true }
-                      Product.search(product_search_params[:name], per_page: 10, page: params[:page]).results
+                      Product.search(product_search_params[:name], per_page: 10, page: params[:page],
+                                                                   where: { availability: true }).results
                     else
                       options = { clear: false }
-                      Product.search(per_page: 10, page: params[:page]).results
+                      Product.search(per_page: 10, page: params[:page], where: { availability: true }).results
                     end
         render json: ProductSerializer.new(@products, { meta: options }).serializable_hash
       end

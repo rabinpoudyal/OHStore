@@ -25,6 +25,18 @@
 - [x] View only products that are in stock
 - [x] View only access for Non-Logged in users
 - [x] Add/Edit/Delete products for Admin users
+- [x] Spinner for all API calls
+- [x] Fetching only required data from API
+
+## TODO
+- [x] Thunk middleware for API calls(for authentication)
+- [x] Pundit for authorization
+- [x] Frontend tests
+- [x] React app deployment
+- [x] Better search results for products(autocomplete, suggestions, etc.)
+
+## Limitations
+- [x] Could not host on Heroku due to Elasticsearch addon
 
 ## Installation
 Once you have the above dependencies installed, you can install the application by running the following commands:
@@ -63,7 +75,6 @@ $ rake import:products
 
 Elasticsearch is used for full text search. 
 
-
 ## Running Tests
 
 Rspec tests can be run with the following command:
@@ -80,6 +91,7 @@ Rubocop can be run with the following command:
 $ bundle exec rubocop
 ```
 
-## Known Issues
-* Search can be improved for better results
-* Authentication in API (TODO)
+## Screenshots
+![Products]("./../screenshots/Screenshot%202023-04-16%20at%2011.09.54%20pm.png")
+![Login]("./../screenshots/Screenshot%202023-04-16%20at%2011.17.27%20pm.png")
+![Logged In]("./../screenshots/Screenshot%202023-04-16%20at%2011.18.31%20pm.png")

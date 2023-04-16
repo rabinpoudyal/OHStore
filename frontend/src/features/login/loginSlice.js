@@ -73,5 +73,10 @@ export const selectEmail = (state) => state.login.email;
 export const selectPassword = (state) => state.login.password;
 export const selectIsSignedIn = (state) => state.login.isLoggedIn;
 export const selectErrors = (state) => state.login.errors;
+export const selectAuthHeaders = (state) => ({
+  'access-token': state.login.accessToken,
+  client: state.login.client,
+  uid: state.login.uid,
+});
 
 export default loginSlice.reducer;
