@@ -3,7 +3,7 @@ import { GET_PRODUCTS } from "../../endpoints";
 
 // A mock function to mimic making an async request for data
 export function getProducts(filters) {
-  const { page, perPage, sort, order, ...rest } = filters;
+  const { ...rest } = filters;
   const query = Object.keys(rest)
     .map((key) => `${key}=${rest[key]}`)
     .join("&");

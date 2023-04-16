@@ -52,6 +52,7 @@ gem 'rack-cors'
 gem "searchkick"
 
 gem "elasticsearch"
+gem "kaminari"
 
 # gem 'rss', git: 'https://github.com/rabinpoudyal/rss', branch: 'namespaced-attributes'
 

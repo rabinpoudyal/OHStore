@@ -62,8 +62,9 @@ export const productsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getProductsAsync.fulfilled, (state, action) => {
+        const products = dataFormatter.deserialize(action.payload);
         state.status = "idle";
-        state.products = dataFormatter.deserialize(action.payload);
+        state.products = [ ...state.products, ...products];
       })
       .addCase(getProductsAsync.rejected, (state) => {
         state.status = "failed";
@@ -130,5 +131,6 @@ export const selectProducts = (state) => state.products.products;
 export const selectSelectedProduct = (state) => state.products.selectedProduct;
 export const selectErrors = (state) => state.products.errors;
 export const selectStatus = (state) => state.products.status;
+export const selectIsLoading = (state) => state.products.status === "loading";
 
 export default productsSlice.reducer;

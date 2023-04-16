@@ -1,13 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  Card,
-  CardImg,
-  CardBody,
-  CardText,
   Row,
   Col,
-  CardFooter,
   Button,
   Input,
 } from "reactstrap";
@@ -19,6 +14,7 @@ import {
   editProductAsync,
   selectProducts,
   setSelectedProduct,
+  selectIsLoading,
 } from "./productsSlice";
 
 import styles from "./Products.module.css";
@@ -27,16 +23,40 @@ import { selectIsSignedIn } from "../login/loginSlice";
 import _ from "lodash";
 
 const Products = () => {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const isLoggedIn = useSelector(selectIsSignedIn);
+  const isLoading = useSelector(selectIsLoading);
 
   const [addProductModalIsOpen, setAddProductModalIsOpen] = useState(false);
   const toggle = () => setAddProductModalIsOpen(!addProductModalIsOpen);
 
+  const observer = useRef();
+  const lastProductRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+
   useEffect(() => {
-    dispatch(getProductsAsync({}));
-  }, [dispatch]);
+    if (hasMore) {
+      dispatch(getProductsAsync({ page: pageNumber }));
+    }
+  }, [dispatch, hasMore, pageNumber]);
+
+  useEffect(() => {
+    setHasMore(products.length % 10 === 0);
+  }, [products]);
 
   const destroyProduct = (id) => {
     dispatch(destroyProductAsync(id));
@@ -124,7 +144,7 @@ const Products = () => {
           </div>
         </Col>
         <Col md="10">
-          <div className="d-flex justify-content-between flex-wrap gap-5 mt-5">
+          <div className="d-flex justify-content-between flex-wrap gap-5 mt-5"> 
             {products.map((product, index) => {
               return (
                 <div key={index}>
@@ -138,7 +158,7 @@ const Products = () => {
                       />
                     </div>
                     <div className={styles.productDetails}>
-                      <div className={styles.productTitle}>{_.truncate(product.name)}</div>
+                      <div className={styles.productTitle}>{product.name}</div>
                       <div className={styles.productPrice}>
                         {formatter.format(product.price)}
                       </div>
@@ -156,7 +176,7 @@ const Products = () => {
                               Edit
                             </Button>
                             <Button
-                              color="dark"
+                              color="danger"
                               outline
                               className={styles.button}
                               onClick={() => destroyProduct(product.id)}
@@ -174,6 +194,8 @@ const Products = () => {
           </div>
         </Col>
       </Row>
+
+      <div ref={lastProductRef}></div>
 
       <AddProductModal
         isOpen={addProductModalIsOpen}

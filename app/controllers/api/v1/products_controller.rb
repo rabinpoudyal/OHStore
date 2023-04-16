@@ -2,14 +2,20 @@
 
 module Api
   module V1
-    class ProductsController < ApplicationController
+    class ProductsController < ApiController
+
+      # before_action :check_elasticsearch, only: [:index]
+
       def index
         @products = if product_search_params[:name].present?
                       Product.search(product_search_params[:name]).results
                     else
-                      Product.search(limit: 10).results
+                      Product.search(per_page: 10, page: params[:page]).results
                     end
-        render json: ProductSerializer.new(@products).serializable_hash
+        # has_next_page = @products.total_pages > @products.current_page
+        render json: ProductSerializer.new(@products, { meta: {
+                                             has_next_page: false
+                                           } }).serializable_hash
       end
 
       def create

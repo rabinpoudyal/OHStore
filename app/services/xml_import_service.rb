@@ -17,9 +17,9 @@ class XmlImportService < BaseService
         price: item.at('g|price').text.to_f,
         brand: Brand.find_or_create_by(name: item.at('g|brand').text.strip),
         gtin: item.at('g|gtin').text,
-        # image_link: item.at('g|image_link').text,
+        remote_image_link: item.at('g|image_link').text,
         availability: item.at('g|availability').text == 'in stock',
-        category: category
+        category:
       }
       build_product(product)
     end
