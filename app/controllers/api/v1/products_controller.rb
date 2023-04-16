@@ -3,9 +3,6 @@
 module Api
   module V1
     class ProductsController < ApiController
-
-      # before_action :check_elasticsearch, only: [:index]
-
       def index
         @products = if product_search_params[:name].present?
                       options = { clear: true }

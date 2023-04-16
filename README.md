@@ -28,5 +28,8 @@ Things you may want to cover:
 * [React](https://facebook.github.io/react/)
 * [Redux](http://redux.js.org/)
 
-## SOLID Principles Used
-1. 
+## Installation
+
+* Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
+* Install [PostgreSQL](https://www.postgresql.org/download/)
+* Install [Node.js](https://nodejs.org/en/download/)
